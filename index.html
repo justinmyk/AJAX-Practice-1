@@ -18,8 +18,8 @@
       <div class="jumbotron text-center">
         <h1 class="display-4">Hello, world!</h1>
         <h1 class="display-4">My Name is <span id="demo">????<span></h1>
-        <hr   class="my-4">
-        <p>Click the button below to find out what my name is!</p>
+        <hr class="my-4">
+        <p id="info">Click the button below to find out what my name is!</p>
         <button type="button" class="btn btn-outline-primary btn-lg" onclick="loadDoc()">Reveal Name</button>
       </div>
     </div>
@@ -30,11 +30,17 @@
           var req = new XMLHttpRequest();
           req.onreadystatechange = function() {
             if(this.readyState == 4 && this.status == 200 ){
-              document.getElementById("demo").innerHTML =
-              this.responseText;
+              var nameObj = this.responseText;
+              console.log(nameObj);
+              nameObj = JSON.parse(nameObj);
+              console.log(nameObj.lastName);
+
+              document.getElementById("demo").innerHTML = nameObj.firstName + " " + nameObj.lastname;
+              document.getElementById("info").innerHTML = "I am " + nameObj.age + "and I am a" + nameObj.role;
+
             }
           }
-          req.open("GET","weather.txt",true);
+          req.open("GET","name.json",true);
           req.send();
       }
 
